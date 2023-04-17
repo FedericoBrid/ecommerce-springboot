@@ -17,8 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ecommerce.model.Producto;
 import com.ecommerce.model.Usuario;
+import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
 import com.ecommerce.service.UploadFileService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")
@@ -28,6 +31,9 @@ public class ProductoController {
 	
 	@Autowired
 	private ProductoService productoService;
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@Autowired
 	private UploadFileService upload;
@@ -83,9 +89,10 @@ public class ProductoController {
 		return "redirect:/productos";
 	}
 	@PostMapping("/save")
-	public String save(Producto producto,@RequestParam("img") MultipartFile file) throws IOException {
+	public String save(Producto producto,@RequestParam("img") MultipartFile file, HttpSession session) throws IOException {
 		LOGGER.info("Es el metodo save de productoController {}", producto);
-		Usuario user = new Usuario(1,"","","","","","","");
+		
+		Usuario user = usuarioService.findById(Integer.parseInt(session.getAttribute("idUsuario").toString())).get();
 		producto.setUsuario(user);
 		//este if para guardar img
 		if (producto.getId()==null) { //cuando se crea un producto

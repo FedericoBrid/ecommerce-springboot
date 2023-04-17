@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
   <meta charset="utf-8">
@@ -9,7 +9,6 @@
   <meta name="author" content="">
 
   <title>Spring eCommerce</title>
-
 
 <!-- Bootstrap core CSS -->
 <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}"
@@ -42,49 +41,44 @@
   </nav>
 
 
- <!-- Page Content -->
+  <!-- Page Content -->
   <div class="container">
 
     <div class="card mb-3">
       <div class="row no-gutters">
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+        </div>
         <div class="col-md-8">
           <div class="card-body">
-            <h2>Registro</h2>
+            <h2>Ingresar</h2>
 
           </div>
         </div>
       </div>
     </div>
-    <form th:action="@{/user/save}" method="post">
+
+    
+    <form  th:action="@{/user/acceder}" method="post">
       <div class="form-group">
-        <label for="nombres">Nombres:</label> <input type="text"
-          class="form-control" id="nombre" name="nombre" required
-          placeholder="Ingrese sus nombres" autocomplete="off">
+        <label for="email"> Email:  </label>      
+        <input type="email" class="form-control" id="email" name="email" placeholder="Ingrese su email" required autocomplete="off"> 
+
       </div>
 
       <div class="form-group">
-        <label for="email">Email:</label> <input type="email"
-          class="form-control" id="email" name="email" required
-          placeholder="Ingrese su email" autocomplete="off">
+        <label for="pwd"> Contraseña:</label>
+        <input type="password"  class="form-control" id="password" name="password" placeholder="Ingrese su contraseña" required>       
       </div>
 
       <div class="form-group">
-        <label for="direccion">Dirección:</label> <input type="text"
-          class="form-control" id="direccion" name="direccion" required
-          placeholder="Ingrese su dirección" autocomplete="off">
-      </div>
-
-      <div class="form-group">
-        <label for="pwd">Contraseña</label> <input type="password"
-          class="form-control" id="password" name="password" required placeholder="Ingrese su contraseña" autocomplete="off">
-      </div>
-      <div class="col-sm-2">
-        <button type="submit" class="btn btn-success">Guardar</button>
-      </div>
+        <div class="col-sm-2">
+          <button type="submit" class="btn btn-dark"> <span class="glyphicon glyphicon-ok"></span> Ingresar</button>
+        </div>      
+      </div>    
     </form>
-
+    <a th:href="@{/user/register}" class="card-link">Si aún no tiene cuenta aqui puede registrarse</a>
   </div>
+  <!-- /.container -->
 
   <!-- /.container -->
 
