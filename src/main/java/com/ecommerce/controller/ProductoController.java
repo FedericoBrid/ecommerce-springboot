@@ -21,7 +21,7 @@ import com.ecommerce.service.IUsuarioService;
 import com.ecommerce.service.ProductoService;
 import com.ecommerce.service.UploadFileService;
 
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/productos")

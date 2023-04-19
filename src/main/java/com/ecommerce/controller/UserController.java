@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ import com.ecommerce.model.Usuario;
 import com.ecommerce.service.IOrdenService;
 import com.ecommerce.service.IUsuarioService;
 
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
 
 
 @Controller
@@ -32,6 +33,8 @@ public class UserController {
 	
 	@Autowired
 	private IOrdenService ordenService;
+	
+	BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
 
 	@GetMapping("/register")
 	public String create() {
@@ -42,6 +45,7 @@ public class UserController {
 	public String save(Usuario usuario) {
 		LOGGER.info("Usuario: {}",usuario);
 		usuario.setTipo("USER");
+		usuario.setPassword(passEncode.encode(usuario.getPassword()));
 		usuarioService.save(usuario);
 		return "redirect:/";
 	}
@@ -51,10 +55,10 @@ public class UserController {
 		
 		return "user/login";
 	}
-	@PostMapping("/acceder")
+	@GetMapping("/acceder")
 	public String acceder(Usuario usuario, HttpSession session) {
 		LOGGER.info("acceso: {}",usuario);
-		Optional<Usuario> user = usuarioService.findByEmail(usuario.getEmail());
+		Optional<Usuario> user = usuarioService.findById(Integer.parseInt(session.getAttribute("idUsuario").toString()));
 		
 		if (user.isPresent()) {
 			session.setAttribute("idUsuario", user.get().getId());
